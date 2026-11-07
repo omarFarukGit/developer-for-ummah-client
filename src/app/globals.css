@@ -128,3 +128,49 @@
     @apply font-sans;
   }
 }
+
+:root {
+  --background: #060d16;
+  --foreground: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #060d16;
+  color: #f8fafc;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07111c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #26384b;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00e5a0;
+}
+
+/* Selection */
+
+::selection {
+  background: #00e5a0;
+  color: #061018;
+}
