@@ -1,98 +1,74 @@
-import Link from "next/link";
-import { getCourses } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import CreateCourseDialog from "@/components/dashboard/create-course-dialog";
+import DashboardContent from "@/components/dashboard/dashboard-content";
+import { Suspense } from "react";
 
-export default async function DashboardPage() {
-  const courses = await getCourses();
-
+function DashboardLoading() {
   return (
     <div className="min-h-screen bg-[#060d16] text-white">
       <div className="mx-auto max-w-7xl px-6 py-10">
-        {/* Header */}
+        {/* Header Skeleton */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <div className="h-9 w-52 animate-pulse rounded bg-white/10" />
 
-            <p className="mt-2 text-gray-400">
-              Manage your courses and lessons
-            </p>
+            <div className="mt-3 h-4 w-72 animate-pulse rounded bg-white/5" />
           </div>
 
-          <CreateCourseDialog />
+          {/* Create Course Button */}
+          <div className="h-10 w-32 animate-pulse rounded-md bg-white/10" />
         </div>
 
-        {/* Course Count */}
+        {/* Course Count Skeleton */}
         <div className="mb-6">
-          <p className="text-sm text-gray-400">
-            Total Courses:{" "}
-            <span className="font-semibold text-white">{courses.length}</span>
-          </p>
+          <div className="h-4 w-36 animate-pulse rounded bg-white/5" />
         </div>
 
-        {/* Courses */}
-        {courses.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-white/10 bg-[#07111c] p-12 text-center">
-            <h2 className="text-xl font-semibold">No courses found</h2>
+        {/* Course Cards Skeleton */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            "course-skeleton-1",
+            "course-skeleton-2",
+            "course-skeleton-3",
+            "course-skeleton-4",
+            "course-skeleton-5",
+            "course-skeleton-6",
+          ].map((key) => (
+            <div
+              key={key}
+              className="overflow-hidden rounded-xl border border-white/10 bg-[#07111c]"
+            >
+              {/* Thumbnail */}
+              <div className="aspect-video animate-pulse bg-white/5" />
 
-            <p className="mt-2 text-gray-400">
-              Create your first course to get started.
-            </p>
+              {/* Content */}
+              <div className="p-5">
+                {/* Title */}
+                <div className="h-5 w-3/4 animate-pulse rounded bg-white/10" />
 
-            <Link href="/dashboard/courses/create">
-              <Button className="mt-5 bg-[#00e5a0] text-black hover:bg-[#00e5a0]/90">
-                <Plus className="mr-2 h-4 w-4" />
-                Create Course
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <Link
-                key={course.id}
-                href={`/dashboard/courses/${course.id}`}
-                className="group"
-              >
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-[#07111c] transition hover:-translate-y-1 hover:border-[#00e5a0]/50">
-                  {/* Thumbnail */}
-                  {course.thumbnail ? (
-                    <img
-                      src={course.thumbnail}
-                      alt={course.title}
-                      className="aspect-video w-full object-cover transition group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex aspect-video items-center justify-center bg-white/5 text-gray-500">
-                      No Thumbnail
-                    </div>
-                  )}
-
-                  {/* Content */}
-                  <div className="p-5">
-                    <h2 className="text-lg font-semibold transition group-hover:text-[#00e5a0]">
-                      {course.title}
-                    </h2>
-
-                    <p className="mt-2 line-clamp-2 text-sm text-gray-400">
-                      {course.description}
-                    </p>
-
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        {course.lessons?.length ?? 0} Lessons
-                      </span>
-
-                      <span className="text-sm text-[#00e5a0]">Manage →</span>
-                    </div>
-                  </div>
+                {/* Description */}
+                <div className="mt-3 space-y-2">
+                  <div className="h-3 w-full animate-pulse rounded bg-white/5" />
+                  <div className="h-3 w-2/3 animate-pulse rounded bg-white/5" />
                 </div>
-              </Link>
-            ))}
-          </div>
-        )}
+
+                {/* Footer */}
+                <div className="mt-5 flex items-center justify-between">
+                  <div className="h-4 w-20 animate-pulse rounded bg-white/5" />
+
+                  <div className="h-4 w-16 animate-pulse rounded bg-white/5" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<DashboardLoading />}>
+      <DashboardContent />
+    </Suspense>
   );
 }
