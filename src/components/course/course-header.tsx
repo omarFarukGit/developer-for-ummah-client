@@ -3,6 +3,7 @@
 import { Eye, PlayCircle, Star } from "lucide-react";
 
 import { Course } from "@/lib/types";
+import Image from "next/image";
 
 interface CourseHeaderProps {
   course: Course;
@@ -24,10 +25,21 @@ export default function CourseHeader({ course }: CourseHeaderProps) {
       <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
         {/* Title */}
         <div className="max-w-3xl">
-          <div className="flex items-start gap-4">
-            <div className="mt-1 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#00e5a0] text-[#061018] sm:flex">
-              <PlayCircle size={25} fill="currentColor" />
-            </div>
+          <div className="flex items-start gap-4  ">
+            {course.icon ? (
+              <Image
+                src={course.icon}
+                alt={`${course.title} icon`}
+                width={40}
+                height={40}
+                className="h-12 w-12 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <div className="mt-1 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#00e5a0] text-[#061018] sm:flex">
+                <PlayCircle size={25} fill="currentColor" />
+              </div>
+            )}
+            
 
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-[32px]">

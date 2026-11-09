@@ -5,6 +5,7 @@ import { BookOpen, Play, Rocket } from "lucide-react";
 import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 import { Course } from "@/lib/types";
+import Image from "next/image";
 
 interface InstructorSidebarProps {
   courses: Course[];
@@ -50,7 +51,7 @@ export default function InstructorSidebar({
               <p className="mt-1 text-xs text-gray-500">Courses</p>
             </div>
 
-            <div className="text-center">
+            {/* <div className="text-center">
               <div className="flex items-center justify-center gap-2">
                 <Play size={16} className="text-[#00e5a0]" />
 
@@ -58,7 +59,7 @@ export default function InstructorSidebar({
               </div>
 
               <p className="mt-1 text-xs text-gray-500">Views</p>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -85,13 +86,27 @@ export default function InstructorSidebar({
                   }`}
                 >
                   <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                      active
-                        ? "bg-[#00e5a0] text-[#061018]"
-                        : "bg-[#152235] text-gray-400"
+                    className={`relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg ${
+                      active ? "bg-[#00e5a0]" : "bg-[#152235]"
                     }`}
                   >
-                    {course.title.charAt(0).toUpperCase()}
+                    {course.icon ? (
+                      <Image
+                        src={course.icon}
+                        alt={`${course.title} icon`}
+                        width={40}
+                        height={40}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span
+                        className={`font-semibold ${
+                          active ? "text-[#061018]" : "text-gray-400"
+                        }`}
+                      >
+                        {course.title.charAt(0).toUpperCase()}
+                      </span>
+                    )}
                   </div>
 
                   <div className="min-w-0 flex-1">

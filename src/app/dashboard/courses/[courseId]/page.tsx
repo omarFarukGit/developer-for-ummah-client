@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getCourse, getLessons } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash2 } from "lucide-react";
@@ -37,9 +38,11 @@ export default async function CourseManagePage({ params }: PageProps) {
         <div className="mt-6 rounded-xl border border-white/10 bg-[#07111c] p-6">
           <div className="flex flex-col gap-6 md:flex-row">
             {course.thumbnail && (
-              <img
-                src={course.thumbnail}
-                alt={course.title}
+              <Image
+                src={course?.thumbnail}
+                alt={course?.title}
+                height={180}
+                width={180}
                 className="w-full rounded-lg object-cover md:w-72"
               />
             )}
@@ -81,12 +84,7 @@ export default async function CourseManagePage({ params }: PageProps) {
               <div className="rounded-lg border border-dashed border-white/10 p-8 text-center">
                 <p className="text-gray-400">No lessons added yet.</p>
 
-                <Link href={`/dashboard/courses/${courseId}/lessons/create`}>
-                  <Button className="mt-4 bg-[#00e5a0] text-black">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add First Lesson
-                  </Button>
-                </Link>
+                <CreateLessonDialog courseId={courseId} />
               </div>
             ) : (
               lessons.map((lesson) => (

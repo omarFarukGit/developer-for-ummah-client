@@ -28,6 +28,7 @@ export default function CreateCourseDialog() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [icon, setIcon] = useState<File | null>(null);
 
   const resetForm = () => {
     setTitle("");
@@ -51,6 +52,11 @@ export default function CreateCourseDialog() {
       return;
     }
 
+    if (!icon) {
+      setError("Course icon is required");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -59,6 +65,7 @@ export default function CreateCourseDialog() {
       formData.append("title", title);
       formData.append("description", description);
       formData.append("thumbnail", thumbnail);
+      formData.append("icon", icon);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/courses`,
@@ -205,6 +212,49 @@ export default function CreateCourseDialog() {
             />
           </div>
 
+          {/* Course Icon */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Course Icon</p>
+
+            <label
+              htmlFor="course-icon"
+              className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-white/[0.02] px-6 py-6 transition hover:border-[#00e5a0]/50"
+            >
+              <ImagePlus className="mb-3 h-7 w-7 text-gray-500" />
+
+              {icon ? (
+                <>
+                  <p className="max-w-full truncate text-sm font-medium text-[#00e5a0]">
+                    {icon.name}
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-500">
+                    Click to change icon
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm font-medium text-gray-300">
+                    Upload Course Icon
+                  </p>
+
+                  <p className="mt-1 text-xs text-gray-500">PNG, JPG or WEBP</p>
+                </>
+              )}
+            </label>
+
+            <input
+              id="course-icon"
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0] ?? null;
+                setIcon(file);
+              }}
+            />
+          </div>
+
           {/* Buttons */}
           <div className="flex justify-end gap-3 pt-2">
             <Button
@@ -220,7 +270,7 @@ export default function CreateCourseDialog() {
             <Button
               type="submit"
               disabled={loading}
-              className="bg-[#00e5a0] text-black hover:bg-[#00e5a0]/90"
+              className="bg-[#00e5a0] text-black hover:bg-[#00e5a0]/90 cursor-pointer"
             >
               {loading ? (
                 <>

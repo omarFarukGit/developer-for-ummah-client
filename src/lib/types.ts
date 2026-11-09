@@ -11,6 +11,8 @@ export interface Course {
   title: string;
   description?: string | null;
   thumbnail?: string | null;
+  icon?: string | null;
+
   createdAt?: string;
   updatedAt?: string;
   lessons: Lesson[];
