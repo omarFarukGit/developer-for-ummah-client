@@ -39,7 +39,6 @@ export default function CourseHeader({ course }: CourseHeaderProps) {
                 <PlayCircle size={25} fill="currentColor" />
               </div>
             )}
-            
 
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl lg:text-[32px]">

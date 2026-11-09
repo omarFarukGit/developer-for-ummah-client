@@ -1,6 +1,8 @@
-import CourseLayout from "@/components/course/course-layout";
+import { Suspense } from "react";
+
 import Navbar from "@/components/navbar";
-import { getCourse, getCourses } from "@/lib/api";
+import CourseContent from "./course-content";
+import { CourseLoading } from "./course-loading";
 
 interface PageProps {
   params: Promise<{
@@ -8,19 +10,14 @@ interface PageProps {
   }>;
 }
 
-export default async function CoursePage({ params }: PageProps) {
-  const { courseId } = await params;
-
-  const [course, courses] = await Promise.all([
-    getCourse(courseId),
-    getCourses(),
-  ]);
-
+export default function CoursePage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-[#060d16]">
       <Navbar />
 
-      <CourseLayout course={course} courses={courses} />
+      <Suspense fallback={<CourseLoading />}>
+        <CourseContent params={params} />
+      </Suspense>
     </div>
   );
 }
