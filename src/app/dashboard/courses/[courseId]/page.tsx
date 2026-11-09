@@ -2,6 +2,11 @@ import Link from "next/link";
 import { getCourse, getLessons } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import UpdateCourseDialog from "@/components/dashboard/update-course-dialog";
+import CreateLessonDialog from "@/components/dashboard/create-lesson-dialog";
+import EditLessonDialog from "@/components/dashboard/edit-lesson-dialog";
+import DeleteLessonDialog from "@/components/dashboard/delete-lesson-dialog";
+import DeleteCourseDialog from "@/components/dashboard/delete-course-dialog";
 
 interface PageProps {
   params: Promise<{
@@ -45,15 +50,12 @@ export default async function CourseManagePage({ params }: PageProps) {
               <p className="mt-3 text-gray-400">{course.description}</p>
 
               <div className="mt-5 flex gap-3">
-                <Button variant="outline">
-                  <Pencil className="mr-2 h-4 w-4" />
-                  Edit Course
-                </Button>
+                <UpdateCourseDialog course={course} />
 
-                <Button variant="destructive">
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
-                </Button>
+                <DeleteCourseDialog
+                  courseId={course.id}
+                  courseTitle={course.title}
+                />
               </div>
             </div>
           </div>
@@ -70,12 +72,7 @@ export default async function CourseManagePage({ params }: PageProps) {
               </p>
             </div>
 
-            <Link href={`/dashboard/courses/${courseId}/lessons/create`}>
-              <Button className="bg-[#00e5a0] text-black hover:bg-[#00e5a0]/90">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Lesson
-              </Button>
-            </Link>
+            <CreateLessonDialog courseId={courseId} />
           </div>
 
           {/* Lesson List */}
@@ -112,13 +109,12 @@ export default async function CourseManagePage({ params }: PageProps) {
                   </div>
 
                   {/* Actions */}
-                  <Button variant="outline" size="sm">
-                    Edit
-                  </Button>
+                  <EditLessonDialog lesson={lesson} />
 
-                  <Button variant="destructive" size="sm">
-                    Delete
-                  </Button>
+                  <DeleteLessonDialog
+                    lessonId={lesson.id}
+                    lessonTitle={lesson.title}
+                  />
                 </div>
               ))
             )}

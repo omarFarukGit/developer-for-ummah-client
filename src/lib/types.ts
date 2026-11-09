@@ -15,3 +15,7 @@ export interface Course {
   updatedAt?: string;
   lessons: Lesson[];
 }
+
+export interface UpdateCourseDialogProps {
+  course: Course;
+}

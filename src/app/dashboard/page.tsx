@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCourses } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import CreateCourseDialog from "@/components/dashboard/create-course-dialog";
 
 export default async function DashboardPage() {
   const courses = await getCourses();
@@ -19,12 +20,7 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          <Link href="/dashboard/courses/create">
-            <Button className="bg-[#00e5a0] text-black hover:bg-[#00e5a0]/90">
-              <Plus className="mr-2 h-4 w-4" />
-              Create New Course
-            </Button>
-          </Link>
+          <CreateCourseDialog />
         </div>
 
         {/* Course Count */}

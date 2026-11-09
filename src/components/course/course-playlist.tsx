@@ -7,7 +7,7 @@ import LessonItem from "./lesson-item";
 
 interface CoursePlaylistProps {
   lessons: Lesson[];
-  selectedLesson: Lesson;
+  selectedLesson: Lesson | null;
   onSelectLesson: (lesson: Lesson) => void;
 }
 
@@ -36,7 +36,7 @@ export default function CoursePlaylist({
             key={lesson.id}
             lesson={lesson}
             index={index}
-            active={selectedLesson.id === lesson.id}
+            active={selectedLesson?.id === lesson.id}
             onClick={() => onSelectLesson(lesson)}
           />
         ))}
